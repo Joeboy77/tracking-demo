@@ -1,0 +1,2206 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+.header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff6b6b;
+}
+
+.logo i {
+  font-size: 2rem;
+}
+
+.view-toggle {
+  display: flex;
+  background: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+}
+
+.toggle-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.toggle-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+.toggle-btn:hover:not(.active) {
+  background: #e9ecef;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.connection-status.connected {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.connection-status.disconnected {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.connection-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+/* View Container */
+.view-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  height: 70vh;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Map Styles */
+.map-container {
+  flex: 1;
+  position: relative;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.info-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 300px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.preparing {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.status-badge.picked-up {
+  background: #cce5ff;
+  color: #004085;
+  border: 1px solid #a6ccff;
+}
+
+.status-badge.on-the-way {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-badge.delivered {
+  background: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #c6c8ca;
+}
+
+.order-info h3 {
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.order-detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.order-detail strong {
+  color: #666;
+}
+
+.controls-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.control-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.control-btn.primary {
+  background: #007bff;
+  color: white;
+}
+
+.control-btn.primary:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.control-btn.success {
+  background: #28a745;
+  color: white;
+}
+
+.control-btn.success:hover {
+  background: #1e7e34;
+  transform: translateY(-2px);
+}
+
+.control-btn.danger {
+  background: #dc3545;
+  color: white;
+}
+
+.control-btn.danger:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Bottom Panel */
+.bottom-panel {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.delivery-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  position: relative;
+}
+
+.progress-step::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 60%;
+  width: 80%;
+  height: 2px;
+  background: #e9ecef;
+  z-index: 1;
+}
+
+.progress-step:last-child::after {
+  display: none;
+}
+
+.progress-step.completed::after {
+  background: #28a745;
+}
+
+.progress-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.progress-icon.completed {
+  background: #28a745;
+  color: white;
+}
+
+.progress-icon.current {
+  background: #007bff;
+  color: white;
+  animation: bounce 1s infinite;
+}
+
+.progress-icon.pending {
+  background: #e9ecef;
+  color: #6c757d;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-5px); }
+  60% { transform: translateY(-3px); }
+}
+
+.progress-label {
+  font-size: 0.8rem;
+  text-align: center;
+  color: #666;
+  font-weight: 500;
+}
+
+.eta-info {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.eta-time {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 0.25rem;
+}
+
+.eta-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .view-toggle {
+    order: -1;
+  }
+  
+  .main-content {
+    padding: 1rem;
+  }
+  
+  .view-container {
+    height: 60vh;
+    min-height: 400px;
+  }
+  
+  .map-overlay {
+    flex-direction: column;
+  }
+  
+  .info-panel,
+  .controls-panel {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .toggle-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Custom marker styles for better visibility */
+.courier-marker {
+  background: #007bff;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+}
+
+.customer-marker {
+  background: #28a745;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+}
+
+.restaurant-marker {
+  background: #ff6b6b;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+}
+
+/* Location Input Panel Styles */
+.location-input-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 350px;
+  min-width: 300px;
+}
+
+.location-input-panel h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.current-location {
+  background: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #e9ecef;
+}
+
+.current-location p {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.current-location small {
+  color: #666;
+  font-size: 0.8rem;
+}
+
+/* Input Method Selector */
+.input-method-selector {
+  display: flex;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+}
+
+.method-btn {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.method-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+.method-btn:hover:not(.active) {
+  background: #e9ecef;
+}
+
+/* Location Form Styles */
+.location-form {
+  margin-bottom: 1rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.address-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease;
+}
+
+.address-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.address-input:disabled {
+  background: #f8f9fa;
+  color: #666;
+}
+
+.search-btn {
+  padding: 0.75rem 1rem;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-btn:hover:not(:disabled) {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+.search-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Coordinates Input */
+.coords-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.coord-input {
+  padding: 0.75rem;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease;
+}
+
+.coord-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.set-location-btn {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: #28a745;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.set-location-btn:hover:not(:disabled) {
+  background: #1e7e34;
+  transform: translateY(-1px);
+}
+
+.set-location-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.input-hint {
+  color: #666;
+  font-size: 0.8rem;
+  font-style: italic;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Quick Locations */
+.quick-locations {
+  border-top: 1px solid #e9ecef;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.quick-locations small {
+  color: #666;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.location-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.location-chip {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e9ecef;
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.location-chip:hover {
+  background: #f8f9fa;
+  border-color: #007bff;
+  color: #007bff;
+  transform: translateY(-1px);
+}
+
+/* Enhanced Map Overlay for Multiple Panels */
+.map-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+}
+
+/* Improved Control Button Styles */
+.control-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.control-btn.primary {
+  background: #007bff;
+  color: white;
+}
+
+.control-btn.primary:hover:not(:disabled) {
+  background: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.control-btn.success {
+  background: #28a745;
+  color: white;
+}
+
+.control-btn.success:hover:not(:disabled) {
+  background: #1e7e34;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.control-btn.danger {
+  background: #dc3545;
+  color: white;
+}
+
+.control-btn.danger:hover:not(:disabled) {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Enhanced Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.status-badge.preparing {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.status-badge.picked-up {
+  background: #cce5ff;
+  color: #004085;
+  border: 1px solid #a6ccff;
+}
+
+.status-badge.on-the-way {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  animation: pulse 2s infinite;
+}
+
+.status-badge.delivered {
+  background: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #c6c8ca;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* Enhanced ETA Info Cards */
+.eta-info {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.eta-info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.eta-time {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.eta-label {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Enhanced Map Markers */
+.courier-marker,
+.customer-marker,
+.restaurant-marker {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.courier-marker {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.customer-marker {
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+}
+
+.restaurant-marker {
+  background: linear-gradient(135deg, #ff6b6b, #e55353);
+}
+
+/* Pulse animation for active tracking */
+.tracking-active .courier-marker {
+  animation: markerPulse 2s infinite;
+}
+
+@keyframes markerPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Loading States */
+.loading-geocoding {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Updates */
+@media (max-width: 768px) {
+  .location-input-panel {
+    max-width: none;
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .map-overlay {
+    flex-direction: column;
+    max-height: none;
+    overflow-y: visible;
+  }
+  
+  .coords-inputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .location-chips {
+    justify-content: center;
+  }
+  
+  .input-group {
+    flex-direction: column;
+  }
+  
+  .search-btn {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .location-input-panel {
+    padding: 1rem;
+  }
+  
+  .method-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .location-chip {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+
+/* Delivery Area Badge */
+.delivery-area-badge {
+  background: #28a745;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  margin-left: 0.5rem;
+  font-weight: 600;
+  animation: fadeInBadge 0.5s ease;
+}
+
+@keyframes fadeInBadge {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Delivery Notice */
+.delivery-notice {
+  background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
+  border: 1px solid #2196f3;
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.delivery-notice i {
+  color: #2196f3;
+  font-size: 1rem;
+}
+
+/* Enhanced Location Chips for Accra Areas */
+.location-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.location-chip {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #e9ecef;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  text-align: center;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.location-chip:hover {
+  background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+  border-color: #007bff;
+  color: #007bff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+}
+
+.location-chip:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Coverage Info */
+.coverage-info {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  border: 1px solid #e9ecef;
+  text-align: center;
+}
+
+.coverage-info small {
+  color: #666;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.coverage-info i {
+  color: #28a745;
+}
+
+/* Enhanced Input Placeholders for Accra */
+.address-input::placeholder,
+.coord-input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.input-hint {
+  color: #666;
+  font-size: 0.75rem;
+  font-style: italic;
+  display: block;
+  margin-top: 0.5rem;
+  line-height: 1.3;
+}
+
+/* Location Validation Styles */
+.location-input-panel {
+  position: relative;
+}
+
+.location-input-panel::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border-radius: 14px;
+  z-index: -1;
+  opacity: 0.1;
+  animation: glowAccra 3s ease-in-out infinite;
+}
+
+@keyframes glowAccra {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.2; }
+}
+
+/* Enhanced Quick Locations Grid */
+.quick-locations {
+  border-top: 2px solid #e9ecef;
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+}
+
+.quick-locations small {
+  color: #333;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+/* Responsive Design for Accra Features */
+@media (max-width: 768px) {
+  .location-chips {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.4rem;
+  }
+  
+  .location-chip {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.75rem;
+  }
+  
+  .delivery-area-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .delivery-notice {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .location-chips {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .delivery-area-badge {
+    display: block;
+    margin-left: 0;
+    margin-top: 0.25rem;
+    text-align: center;
+    font-size: 0.6rem;
+  }
+  
+  .coverage-info small {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+/* Error States for Out of Bounds */
+.address-input.error,
+.coord-input.error {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Success States for Valid Accra Locations */
+.address-input.success,
+.coord-input.success {
+  border-color: #28a745;
+  background-color: #f8fff9;
+}
+
+/* Enhanced Method Button Styling */
+.method-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.method-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.method-btn:hover::before {
+  left: 100%;
+}
+
+/* Accra Map Focus Enhancement */
+.map-container {
+  position: relative;
+}
+
+.map-container::after {
+  content: 'Delivery Area: Accra, Ghana';
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(40, 167, 69, 0.9);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  animation: slideInLeft 0.5s ease;
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Loading State Enhancements */
+.search-btn .fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+.search-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Enhanced Status Badges for Accra Deliveries */
+.status-badge.within-accra {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-badge.outside-accra {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Accra Coordinates Helper */
+.coord-helper {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #856404;
+}
+
+.coord-helper strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* ADD THESE STYLES TO YOUR src/App.css FILE - FULL MAP VISIBILITY */
+
+/* Full Map Layout */
+.view-container.full-map {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.map-container.full-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Remove the old map overlay that was covering the map */
+.view-container.full-map .map-overlay {
+  display: none;
+}
+
+/* Compact Top Bar */
+.top-bar {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.order-summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.order-id {
+  font-weight: 700;
+  color: #007bff;
+  font-size: 0.9rem;
+}
+
+.restaurant {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.status-indicator {
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-indicator.preparing {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-indicator.picked-up {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status-indicator.on-the-way {
+  background: #d4edda;
+  color: #155724;
+  animation: pulse 2s infinite;
+}
+
+.status-indicator.delivered {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.action-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.action-btn.location-btn {
+  background: #28a745;
+}
+
+.action-btn.location-btn:hover {
+  background: #1e7e34;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* Collapsible Info Drawer */
+.info-drawer {
+  position: absolute;
+  top: 5rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.delivery-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-item .label {
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.detail-item .value {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Location Input Modal */
+.location-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.close-modal {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: #dc3545;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(220, 53, 69, 0.3);
+  transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+  background: #c82333;
+  transform: scale(1.1);
+}
+
+/* Live Tracking Indicator */
+.live-tracking-indicator {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  z-index: 1000;
+  background: rgba(40, 167, 69, 0.95);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  backdrop-filter: blur(10px);
+  animation: slideInRight 0.5s ease;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.tracking-pulse {
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.distance-info {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+/* Bottom Progress Bar */
+.bottom-progress {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.progress-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e9ecef;
+  z-index: 1;
+}
+
+.progress-step-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.step-icon.completed {
+  background: #28a745;
+  color: white;
+}
+
+.step-icon.current {
+  background: #007bff;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+.step-icon.pending {
+  background: #f8f9fa;
+  color: #6c757d;
+  border-color: #e9ecef;
+}
+
+.step-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #666;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.eta-summary {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.eta-time {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 0.25rem;
+}
+
+.eta-label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Accra Delivery Badge */
+.accra-badge {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  background: rgba(40, 167, 69, 0.9);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  animation: slideInBottom 0.5s ease;
+  margin-bottom: 180px; /* Above the progress bar */
+}
+
+@keyframes slideInBottom {
+  from { transform: translateX(-50%) translateY(100%); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+/* Responsive Design for Full Map */
+@media (max-width: 768px) {
+  .top-bar {
+    padding: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+  
+  .order-summary {
+    gap: 0.5rem;
+  }
+  
+  .order-id, .restaurant {
+    font-size: 0.8rem;
+  }
+  
+  .action-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 0.8rem;
+  }
+  
+  .info-drawer {
+    left: 0.5rem;
+    right: 0.5rem;
+    top: 4rem;
+    padding: 0.75rem;
+  }
+  
+  .delivery-details {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .bottom-progress {
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    padding: 0.75rem;
+  }
+  
+  .progress-container {
+    margin-bottom: 0.75rem;
+  }
+  
+  .step-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 0.8rem;
+  }
+  
+  .step-label {
+    font-size: 0.7rem;
+  }
+  
+  .eta-time {
+    font-size: 1.25rem;
+  }
+  
+  .live-tracking-indicator {
+    right: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+  
+  .accra-badge {
+    margin-bottom: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .delivery-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .progress-container {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .step-icon {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .step-label {
+    font-size: 0.65rem;
+  }
+  
+  .live-tracking-indicator {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    margin: 0.5rem;
+    width: fit-content;
+  }
+}
+
+/* Enhanced Animations */
+@keyframes pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Map Focus Enhancement */
+.map-container.full-screen .leaflet-container {
+  background: #f8f9fa;
+}
+
+/* Remove conflicting styles */
+.view-container.full-map .map-overlay,
+.view-container.full-map .info-panel,
+.view-container.full-map .controls-panel {
+  display: none !important;
+}
+
+/* Ensure map controls are accessible */
+.leaflet-control-container {
+  z-index: 1500 !important;
+}
+
+.leaflet-control-zoom {
+  margin-top: 80px !important; /* Below the top bar */
+}
+
+/* Loading states */
+.view-container.full-map.loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-container.full-map.loading::after {
+  content: 'Loading map...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1501;
+  color: #007bff;
+  font-weight: 600;
+}
+
+/* ADD THESE STYLES TO YOUR src/App.css FILE - COURIER FULL MAP */
+
+/* Courier View Specific Styles */
+.view-container.courier-view {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.courier-top {
+  background: rgba(102, 126, 234, 0.95);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.courier-summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.delivery-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.customer-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.courier-info-drawer {
+  position: absolute;
+  top: 5rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  background: rgba(102, 126, 234, 0.95);
+  color: white;
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideDown 0.3s ease;
+}
+
+.courier-info-drawer .delivery-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.courier-info-drawer .detail-item .label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75rem;
+}
+
+.courier-info-drawer .detail-item .value {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Floating Control Panel */
+.floating-controls {
+  position: absolute;
+  bottom: 6rem;
+  right: 1rem;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 180px;
+  animation: slideInRight 0.5s ease;
+}
+
+.floating-controls h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.control-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.control-btn.compact {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  text-align: center;
+  justify-content: center;
+}
+
+.tracking-status {
+  text-align: center;
+  padding: 0.5rem;
+  background: rgba(248, 249, 250, 0.8);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #666;
+}
+
+.tracking-status i {
+  color: #007bff;
+}
+
+/* Bottom Stats Bar */
+.bottom-stats {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: rgba(248, 249, 250, 0.5);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  background: rgba(0, 123, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Courier Badge */
+.accra-badge.courier-badge {
+  background: rgba(102, 126, 234, 0.9);
+  margin-bottom: 140px; /* Above the stats bar */
+}
+
+/* Responsive Design for Courier View */
+@media (max-width: 768px) {
+  .floating-controls {
+    bottom: 5rem;
+    right: 0.5rem;
+    left: 0.5rem;
+    min-width: auto;
+  }
+  
+  .control-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .control-btn.compact {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+  
+  .bottom-stats {
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    padding: 0.75rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1rem;
+  }
+  
+  .stat-label {
+    font-size: 0.7rem;
+  }
+  
+  .courier-info-drawer {
+    left: 0.5rem;
+    right: 0.5rem;
+    top: 4rem;
+    padding: 0.75rem;
+  }
+  
+  .courier-info-drawer .delivery-details {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .accra-badge.courier-badge {
+    margin-bottom: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-controls {
+    bottom: 4.5rem;
+    padding: 0.75rem;
+  }
+  
+  .control-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .control-btn.compact {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .bottom-stats {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.5rem;
+  }
+  
+  .stat-item {
+    padding: 0.4rem;
+  }
+  
+  .stat-value {
+    font-size: 0.9rem;
+  }
+  
+  .stat-label {
+    font-size: 0.65rem;
+  }
+  
+  .courier-top {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .courier-summary {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .accra-badge.courier-badge {
+    margin-bottom: 100px;
+    font-size: 0.7rem;
+  }
+}
+
+/* Enhanced Animations for Courier */
+.floating-controls {
+  animation: slideInRight 0.5s ease;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.bottom-stats {
+  animation: slideInBottom 0.5s ease;
+}
+
+@keyframes slideInBottom {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Courier Map Enhancements */
+.view-container.courier-view .leaflet-container {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+/* Active Tracking Styles */
+.view-container.courier-view.tracking-active {
+  animation: subtlePulse 3s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.3); }
+  50% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0.1); }
+}
+
+/* Enhanced Control Button States */
+.control-btn.compact.primary:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.control-btn.compact.danger:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.control-btn.compact.success:hover {
+  background: #1e7e34;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+/* Status Indicator Enhancements for Courier */
+.courier-top .status-indicator {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.courier-top .status-indicator.on-the-way {
+  background: rgba(40, 167, 69, 0.8);
+  border-color: rgba(40, 167, 69, 0.9);
+  animation: pulse 2s infinite;
+}
+
+.courier-top .status-indicator.delivered {
+  background: rgba(40, 167, 69, 0.9);
+  border-color: rgba(40, 167, 69, 1);
+}
+
+/* Floating Controls Hover Effects */
+.floating-controls:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Connection Status in Stats */
+.stat-item .stat-value.online {
+  color: #28a745;
+}
+
+.stat-item .stat-value.offline {
+  color: #dc3545;
+}
+
+/* Loading States for Courier */
+.view-container.courier-view.loading .floating-controls,
+.view-container.courier-view.loading .bottom-stats {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Enhanced Gradient Backgrounds */
+.courier-info-drawer {
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.95) 0%, 
+    rgba(118, 75, 162, 0.95) 100%);
+}
+
+.floating-controls {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95) 0%, 
+    rgba(248, 249, 250, 0.95) 100%);
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  .floating-controls,
+  .bottom-stats,
+  .courier-info-drawer {
+    animation: none;
+  }
+  
+  .view-container.courier-view.tracking-active {
+    animation: none;
+  }
+  
+  * {
+    transition: none !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .floating-controls,
+  .bottom-stats,
+  .courier-info-drawer {
+    border: 2px solid #000;
+    background: rgba(255, 255, 255, 1);
+  }
+  
+  .courier-top {
+    border: 2px solid #fff;
+    background: rgba(0, 0, 0, 0.9);
+  }
+}
